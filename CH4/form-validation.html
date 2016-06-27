@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es" ng-app="notesApp">
+<head>
+    <meta charset="UTF-8">
+    <title>simple ng model</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js" ></script>
+</head>
+<body ng-controller="MainCtrl as ctrl">
+    <form ng-submit="ctrl.submit()" name="myForm" novalidate>
+        <input type="text" ng-model="ctrl.user.username" required ng-minlength="4">
+        <input type="password" ng-model="ctrl.user.password" required>
+        Pristine: <span ng-bind="myForm.$pristine"></span>
+        Dirty: <span ng-bind="myForm.$dirty"></span>
+        Error:<pre> <span ng-bind="myForm.$error | json"></span></pre>
+        <input type="submit" value="Submit" ng-disabled="myForm.$invalid">
+    </form>
+    <script type="text/javascript">
+        angular.module('notesApp',[])
+        .controller('MainCtrl',[function(){
+            var self = this;
+
+            self.submit = function(){
+                console.log('User Clicked submit with ',self.user);
+            };
+
+        }]);
+    </script>
+</body>
+</html>

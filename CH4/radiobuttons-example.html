@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es" ng-app="notesApp">
+
+<head>
+    <meta charset="UTF-8">
+    <title>nested forms</title>
+    <style type="text/css">
+        input[type="text"],
+        input[type="password"] {
+            border: 1px solid gray;
+            margin-bottom: 3px;
+            padding: 3px;
+        }
+        /*.username.ng-valid.ng-touched{
+            background-color: gray;
+        }*/
+        
+        input.ng-invalid-required.ng-touched {
+            background-color: lightpink;
+        }
+        
+        input.ng-dirty.ng-invalid-minlength {
+            background-color: lightpink;
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+</head>
+
+<body ng-controller="MainController as ctrl">
+    <form name="myForm" novalidate ng-submit="ctrl.submit()">
+        <div ng-init="user = {gender : 'female'}">
+            Female: <input type="radio" name="gender" id="radioFemale" ng-model="user.gender" value="female">
+            Male: <input type="radio" name="gender" id="radioMale" ng-model="user.gender" value="male">
+            Other: <input type="radio" name="gender" id="radioOther" ng-model="user.gender" ng-value="ctrl.otherGender"> {{ctrl.otherGender}}
+            <br/>
+            {{user.gender}}
+        </div>
+    </form>
+    <script type="text/javascript">
+    angular.module('notesApp',[])
+    .controller('MainController',[function(){
+        var self = this;
+        self.otherGender = 'other';
+        self.sports=[
+            {label: 'Basketball',selected:'YES'},
+            {label: 'Cricket',selected:'NO'},
+            {label: 'Soccer',selected:'NO'},
+            {label: 'Swimming',selected:'YES'}
+        ];
+
+        self.submit = function(){
+            console.log('User Clicked submit with ',self.user);
+        };
+
+    }]);
+</script>
+</body>
+
+</html>

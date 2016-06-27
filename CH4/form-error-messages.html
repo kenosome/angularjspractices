@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es" ng-app="notesApp">
+<head>
+    <meta charset="UTF-8">
+    <title>form error messages</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js" ></script>
+</head>
+<body ng-controller="MainController as ctrl">
+    <form name="myForm" ng-submit="ctrl.submit()" >
+        <label for="username">Nombre de usuario: </label>
+        <input type="text" id="username" name="username" required ng-model="ctrl.user.username" ng-minlength="4">
+        <span ng-show="myForm.username.$error.required && myForm.username.$touched" >El nombre de usuario es obligatorio.</span>
+        <span ng-show="myForm.username.$error.minlength">El nombre de usuario debe tener mínimo 4 caracteres.</span>
+        <span ng-show="myForm.username.$invalid && myForm.username.$touched">La información del campo Nombre de usuario no es válida.</span>
+        <br/>
+        <label for="password">Contraseña: </label>
+        <input type="password" name="password" id="password" required ng-model="ctrl.user.password">
+        <span ng-show="myForm.password.$error.required && myForm.password.$touched">La contraseña es obligatoria.</span>
+        <br/><br/>
+        <input type="submit" value="Submit" ng-disabled="myForm.$invalid">
+    </form>
+<script type="text/javascript">
+    angular.module('notesApp',[])
+    .controller('MainController',[function(){
+        var self = this;
+
+        self.submit = function(){
+            console.log('User Clicked submit with ',self.user);
+        };
+
+    }]);
+</script>    
+</body>
+</html>

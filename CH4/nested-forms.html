@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es" ng-app="notesApp">
+<head>
+    <meta charset="UTF-8">
+    <title>nested forms</title>
+    <style type="text/css">
+        input[type="text"] , input[type="password"] {
+            border: 1px solid gray;
+            margin-bottom: 3px;
+            padding: 3px;
+        }
+        /*.username.ng-valid.ng-touched{
+            background-color: gray;
+        }*/
+        input.ng-invalid-required.ng-touched{
+            background-color: lightpink;
+        }
+        input.ng-dirty.ng-invalid-minlength {
+            background-color: lightpink;
+        }
+
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js" ></script>
+</head>
+<body ng-controller="MainController as ctrl">
+    <form name="myForm" novalidate ng-submit="ctrl.submit()" >
+        <label for="username">Nombre de usuario: </label>
+        <input type="text" id="username" name="username" required class="username" ng-model="ctrl.user.username" ng-minlength="4">
+        <br/>
+        <label for="password">Contraseña: </label>
+        <input type="password" name="password" id="password" required class="password" ng-model="ctrl.user.password">
+        <br/><br/>
+        <ng-form name="profile">
+            <input type="text"
+                    name="firstName"
+                    placeholder="First Name"
+                    required
+                    ng-model="ctrl.user.profile.firstName">
+            <input type="text"
+                    name="middleName"
+                    placeholder="Middle Name"
+                    ng-model="ctrl.user.profile.middleName">
+            <input type="text"
+                    name="lastName"
+                    placeholder="Last Name"
+                    required
+                    ng-model="ctrl.user.profile.lastName">
+            <input type="date" 
+                    name="dob"
+                    placeholder="Day of Birth"
+                    ng-model="ctrl.user.profile.dob">
+            <span ng-show="myForm.profile.$invalid">Please fill out the Profile information.</span>
+            <br/>
+            <textarea name="address" id="address" cols="30" rows="10" ng-model="ctrl.user.profile.adress"></textarea>
+        </ng-form>
+        <br/><br/>
+        <input type="submit" value="Submit" ng-disabled="myForm.$invalid">
+    </form>
+<script type="text/javascript">
+    angular.module('notesApp',[])
+    .controller('MainController',[function(){
+        var self = this;
+
+        self.submit = function(){
+            console.log('User Clicked submit with ',self.user);
+        };
+
+    }]);
+</script>    
+</body>
+</html>

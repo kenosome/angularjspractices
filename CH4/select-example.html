@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es" ng-app="notesApp">
+
+<head>
+    <meta charset="UTF-8">
+    <title>select examples</title>
+    <style type="text/css">
+        input[type="text"],
+        input[type="password"], select {
+            border: 1px solid gray;
+            margin-bottom: 3px;
+            padding: 3px;
+        }
+        /*.username.ng-valid.ng-touched{
+            background-color: gray;
+        }*/
+        
+        input.ng-invalid-required.ng-touched {
+            background-color: lightpink;
+        }
+        
+        input.ng-dirty.ng-invalid-minlength {
+            background-color: lightpink;
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+</head>
+
+<body ng-controller="MainController as ctrl">
+    <form name="myForm" novalidate ng-submit="ctrl.submit()">
+        <div ng-init="location = ctrl.user.location">
+            <select name="location" id="selectlocation" ng-model="location">
+                <option value="USA">USA</option>
+                <option value="India">India</option>
+                <option value="Other">Other</option>
+            </select>
+        </div>
+        <div>
+            <select ng-model="ctrl.selectedCountryId"
+                    ng-options="c.id as c.label for c in ctrl.countries">
+            </select>
+            Selected Country ID : {{ctrl.selectedCountryId}} 
+        </div>
+        <div>
+            <select ng-model="ctrl.selectedCountry"
+                    ng-options="c.label for c in ctrl.countries track by c.id">
+            </select>
+            Selected Country : {{ctrl.selectedCountry}}
+        </div>
+    </form>
+    <script type="text/javascript">
+    angular.module('notesApp',[])
+    .controller('MainController',[function(){
+        var self = this;
+
+        self.user = {location : 'Other'};
+        
+        self.countries=[
+            {label : 'USA' , id : 1},
+            {label : 'India' , id : 2},
+            {label : 'Other' , id : 3}
+        ];
+
+        self.selectedCountryId = 2;
+        self.selectedCountry = self.countries[1];
+
+        self.submit = function(){
+            console.log('User Clicked submit with ',self.user);
+        };
+
+    }]);
+</script>
+</body>
+
+</html>
