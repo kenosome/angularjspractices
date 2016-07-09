@@ -1,35 +1,35 @@
 function ItemService(opt_items) {
     var items = opt_items || [];
 
-    this.list = function(){
+    this.list = function () {
         return items;
     };
-    this.add = function(item){
+    this.add = function (item) {
         items.push(item);
     };
 }
 
 angular.module('notesApp', [])
-    .provider('ItemService',function(){
+    .provider('ItemService', function () {
         var haveDefaultItems = true;
 
-        this.disableDefaultItems = function(){
+        this.disableDefaultItems = function () {
             haveDefaultItems = false;
         };
 
         // Esta funcion obtiene nuestras dependencias, no el Provider de arriba.
-        this.$get = [function(){
+        this.$get = [function () {
             var optItems = [];
-            if (haveDefaultItems){
+            if (haveDefaultItems) {
                 optItems = [
-                    {id: 1, label: 'Item 0'},
-                    {id: 2, label: 'Item 1'}
+                    { id: 1, label: 'Item 0' },
+                    { id: 2, label: 'Item 1' }
                 ];
             }
             return new ItemService(optItems);
         }];
     })
-    .config(['ItemServiceProvider',function(ItemServiceProvider){
+    .config(['ItemServiceProvider', function (ItemServiceProvider) {
         // Para ver como el provider puede cambiar la configuracion,
         // cambia el valor de ShouldHaveDefaults a true y ejecuta el ejemplo.
         var ShouldHaveDefaults = true;
@@ -37,7 +37,7 @@ angular.module('notesApp', [])
         // Obtener configuracion desde el servidor 
         // Definir ShouldHaveDefaults de alguna forma
         // Asume que cambia mágicamente por ahora.
-        if(!ShouldHaveDefaults){
+        if (!ShouldHaveDefaults) {
             ItemServiceProvider.disableDefaultItems();
         }
     }])
